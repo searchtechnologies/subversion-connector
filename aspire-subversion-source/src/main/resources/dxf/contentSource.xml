@@ -1,0 +1,71 @@
+<dxf:template version="1.0"
+	xmlns:dxf="http://www.searchtechnologies.com/DXF/2011">
+	<contentSourceConfig>
+		<!-- The connectorSource below will be used in place of the one in the 
+			rap app-bundle -->
+		<connectorSource>
+			<!-- In here goes the specific properties for the content source -->
+			<dxf:fieldset legend="Credentials">
+				<url display="Repository URL" type="string"
+					placeholder="https://svn.searchtechnologies.com/svn/aspire"
+					validations="required,url,regex" protocols="http,https" regex=".*[^/]$">
+					<dxf:help>Enter the repository root directory</dxf:help>
+				</url>
+				<relativeurl display="Relative URL" type="string"
+					validations="required,regex" regex="^(^/|^/.*/$)$" placeholder="/directory"
+					default="/">
+					<dxf:help>Enter the top-level directory to be scanned for documents
+						to be processed. All documents contained in this directory will be
+						processed, including sub-folders and sub-documents (unless
+						specified otherwise). Leave only "/" if you want to crawl all
+						items</dxf:help>
+				</relativeurl>
+				<user display="Username" type="string" validations="required">
+					<dxf:help>Specify username</dxf:help>
+				</user>
+				<password display="Password" type="password" validations="required">
+					<dxf:help>Specify password</dxf:help>
+				</password>
+			</dxf:fieldset>
+
+			<indexContainers display="Index folders?" type="boolean">
+				<dxf:help>Mark checkbox if folders are to be indexed</dxf:help>
+			</indexContainers>
+
+			<scanRecursively display="Scan Recursively?" type="boolean"
+				default="true">
+				<dxf:help>Mark checkbox if the subfolders are to be scanned</dxf:help>
+			</scanRecursively>
+
+			<scanExcludedItems display="Scan Excluded Items"
+				type="boolean">
+				<dxf:help>If selected, the scanner will scan sub items of container
+					items that have been excluded by a pattern (because it matches an
+					exclude pattern or because it doesn't match an include pattern)</dxf:help>
+			</scanExcludedItems>
+			<includes>
+				<dxf:h2>Include patterns</dxf:h2>
+				<include multiple="true">
+					<dxf:attribute name="pattern" display="Pattern" type="string"
+						placeholder="e.g. .*.xml$ or .*tmp[^/]$" validations="required">
+						<dxf:help>Specify regex URL patterns to include</dxf:help>
+					</dxf:attribute>
+				</include>
+			</includes>
+			<excludes>
+				<dxf:hr style="height: 1px;" />
+				<dxf:h2>Exclude patterns</dxf:h2>
+				<exclude multiple="true">
+					<dxf:attribute name="pattern" display="Pattern" type="string"
+						placeholder="e.g. .*.xml$ or .*tmp[^/]$" validations="required">
+						<dxf:help>Specify regex URL patterns to exclude</dxf:help>
+					</dxf:attribute>
+				</exclude>
+			</excludes>
+		</connectorSource>
+
+		<properties>
+			<!-- Currently not used -->
+		</properties>
+	</contentSourceConfig>
+</dxf:template>
