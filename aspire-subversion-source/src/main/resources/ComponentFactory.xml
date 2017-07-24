@@ -1,0 +1,6 @@
+<componentFactory name="aspire-filesystem-rap">
+  <subType name="default" implementation="com.searchtechnologies.aspire.components.SubversionRAP">
+    <description>Subversion Repository Access Provider</description>
+  </subType>
+</componentFactory>
+

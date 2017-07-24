@@ -1,0 +1,11 @@
+<componentFactory name="aspire-subversion-scanner">
+  <subType name="scanner" implementation="com.searchtechnologies.aspire.components.SubversionScanner">
+    <description>Aspire scanner component for Subversion repositories</description>
+  </subType>
+  <subType name="fetcher" implementation="com.searchtechnologies.aspire.components.SubversionFetcher">
+    <description>Aspire data fetcher component for Subversion repositories</description>
+  </subType>
+  <subType name="javaParser" implementation="com.searchtechnologies.aspire.components.SubversionJavaParser">
+    <description>Parse java documents</description>
+  </subType>
+</componentFactory>
