@@ -1,0 +1,34 @@
+<assembly>
+  <id>tester</id>
+  <formats>
+    <format>dir</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>lib</outputDirectory>
+      <scope>provided</scope>
+      <excludes>
+        <exclude>${artifact.groupId}:${artifact.artifactId}:bundle:${artifact.baseVersion}</exclude>
+      </excludes>
+    </dependencySet>
+    <dependencySet>
+      <outputDirectory>lib</outputDirectory>
+      <scope>runtime</scope>
+      <excludes>
+        <exclude>${artifact.groupId}:${artifact.artifactId}:bundle:${artifact.baseVersion}</exclude>
+      </excludes>
+    </dependencySet>
+    <dependencySet>
+      <includes>
+        <include>com.searchtechnologies.aspire:aspire-scanner:jar:*</include>
+      </includes>
+      <unpack>true</unpack>
+      <unpackOptions>
+        <includes>
+          <include>bin/test.bat</include>
+        </includes>
+      </unpackOptions>
+    </dependencySet>
+  </dependencySets>
+</assembly>
