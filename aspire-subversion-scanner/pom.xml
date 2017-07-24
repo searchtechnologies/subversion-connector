@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.searchtechnologies.aspire</groupId>
+  <artifactId>aspire-subversion-scanner</artifactId>
+  <packaging>bundle</packaging>
+  <version>3.1.1-SNAPSHOT</version>
+  <name>Aspire Subversion scanner and fetcher components</name>
+  <description>Scanner and fetcher components for the Subversion connector</description>
+  <url>http://www.searchtechnologies.com</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <profiles>
+    <profile>
+      <id>tester</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>com.searchtechnologies.aspire</groupId>
+          <artifactId>aspire-core</artifactId>
+          <version>3.1.1-SNAPSHOT</version>
+          <scope>provided</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>2.3</version>
+            <configuration>
+              <finalName>scannerTester</finalName>
+              <appendAssemblyId>false</appendAssemblyId>
+              <descriptors>
+                <descriptor>tester.xml</descriptor>
+              </descriptors>
+            </configuration>
+            <executions>
+              <execution>
+                <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.1.2</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>2.3.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-Activator>com.searchtechnologies.aspire.framework.ComponentFactoryActivator</Bundle-Activator>
+            <Export-Package />
+            <Private-Package>
+              com.searchtechnologies.aspire.framework;-split-package:=first,
+              com.searchtechnologies.aspire.framework.utilities;-split-package:=first,
+              com.searchtechnologies.aspire.framework.logging;-split-package:=first,
+              com.searchtechnologies.aspire.framework.auditing;-split-package:=first,
+              com.searchtechnologies.aspire.framework.connector.streams;-split-package:=first,
+              com.searchtechnologies.aspire.framework.noSql;-split-package:=first, 
+              {local-packages};-split-package:=first
+            </Private-Package>
+            <Import-Package>
+              com.searchtechnologies.aspire.services,
+              com.searchtechnologies.aspire.services.xml,
+              com.searchtechnologies.aspire.services.noSql,
+              com.searchtechnologies.aspire.services.json,
+              com.searchtechnologies.aspire.services.logging,
+              com.searchtechnologies.aspire.services.events,
+              
+              com.searchtechnologies.aspire.groupexpansion.server,
+              !com.searchtechnologies.aspire.jms, 
+              !com.searchtechnologies.aspire.jms.contentrepository, 
+              com.searchtechnologies.aspire.services.auditing, 
+              com.searchtechnologies.aspire.services.contentrepository, 
+              com.searchtechnologies.aspire.services.distributed, 
+              !javax.jms,
+              com.searchtechnologies.aspire.groupexpansion,
+              com.searchtechnologies.aspire.groupexpansion.cache,
+              com.searchtechnologies.aspire.groupexpansion.cache.impl,
+              com.searchtechnologies.aspire.services.groupexpansion,
+              javax.xml.*,
+              javax.crypto,
+              javax.crypto.spec,
+              javax.net.ssl,
+              javax.security.auth,
+              javax.security.auth.callback,
+              javax.security.auth.login,
+              javax.security.sasl,
+              javax.swing,
+              javax.swing.text,
+              !org.antlr.stringtemplate,
+              org.ietf.jgss,
+              org.osgi.framework,
+              org.osgi.service.log,
+              org.osgi.util.tracker,
+              org.w3c.dom,
+              org.w3c.dom.*,
+              org.xml.*,
+              !com.ibm.icu.text,
+              !com.ibm.icu.util,
+              !javax.security.auth.x500,
+              !org.eclipse.jdt.internal.compiler.apt.dispatch,
+              !org.osgi.service.event
+            </Import-Package>
+            <Embed-Dependency>!aspire-framework,*;scope=compile</Embed-Dependency>
+            <Embed-Transitive>true</Embed-Transitive>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <!-- OSGI -->
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.core</artifactId>
+      <version>4.2.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
+      <version>4.2.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- SERVICES -->
+    <dependency>
+      <groupId>com.searchtechnologies.aspire</groupId>
+      <artifactId>aspire-services</artifactId>
+      <version>3.1.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- FRAMEWORK -->
+    <dependency>
+      <groupId>com.searchtechnologies.aspire</groupId>
+      <artifactId>aspire-framework</artifactId>
+      <version>3.1.1-SNAPSHOT</version>
+    </dependency>
+
+    <!-- SCANNER -->
+    <dependency>
+      <groupId>com.searchtechnologies.aspire</groupId>
+      <artifactId>aspire-scanner</artifactId>
+      <version>3.1.1-SNAPSHOT</version>
+    </dependency>
+
+    <!-- GROUP EXPANSION -->
+    <dependency>
+      <groupId>com.searchtechnologies.aspire</groupId>
+      <artifactId>aspire-simple-group-expander</artifactId>
+      <version>3.1.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- SVN -->
+    <dependency>
+      <groupId>org.tmatesoft.svnkit</groupId>
+      <artifactId>svnkit</artifactId>
+      <version>1.8.5</version>
+    </dependency>
+    
+    <!-- Fetch URL -->
+    <dependency>
+      <groupId>com.searchtechnologies.aspire</groupId>
+      <artifactId>aspire-fetch-url</artifactId>
+      <version>3.1.1-SNAPSHOT</version>
+    </dependency>
+
+    <!-- Commons-IO -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
+    </dependency>
+
+    <!-- TESTING -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.searchtechnologies.aspire</groupId>
+      <artifactId>aspire-application</artifactId>
+      <version>3.1.1-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.searchtechnologies.aspire</groupId>
+      <artifactId>aspire-test</artifactId>
+      <version>3.1.1-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jmockit</groupId>
+      <artifactId>jmockit</artifactId>
+      <version>1.8</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jdt</groupId>
+      <artifactId>core</artifactId>
+      <version>3.3.0-v_771</version>
+    </dependency>
+  </dependencies>
+  <distributionManagement>
+    <repository>
+      <id>stPublic</id>
+      <url>${stPublicUrl}</url>
+    </repository>
+  </distributionManagement>
+</project>
